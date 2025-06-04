@@ -24,10 +24,16 @@ namespace WinFormsApp1
         private void Form1_Load(object sender, EventArgs e)
         {
             CenterButtons(button1, button3);
-            
+            button1.Click += button1_Click;
 
         }
-        
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form3 hra = new Form3();
+            hra.Show();  
+            this.Hide();  
+        }
+
 
 
     }
