@@ -20,11 +20,18 @@ namespace WinFormsApp1
         private void Form3_Load(object sender, EventArgs e)
         {
             button1.Click += button1_Click;
+            button2.Click += button2_Click;
             button3.Click += button3_Click;
         }
         private void button1_Click(object sender, EventArgs e)
         {
             Form2 hra = new Form2();
+            hra.Show();
+            this.Hide();
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Form5 hra = new Form5();
             hra.Show();
             this.Hide();
         }

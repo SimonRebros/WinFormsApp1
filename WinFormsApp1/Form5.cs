@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace WinFormsApp1
 {
-    public partial class Form2 : Form
+    public partial class Form5 : Form
     {
         private System.Windows.Forms.Timer enemySpawnTimer;
         private System.Windows.Forms.Timer enemyMoveTimer;
@@ -16,16 +16,16 @@ namespace WinFormsApp1
 
         private int enemiesspawned = 0;
         private int enemiesdestroyed = 0;
-        private const int maxenemies = 25;
+        private const int maxenemies = 20;
 
         private bool gameOver = false;
 
-        public Form2()
+        public Form5()
         {
             InitializeComponent();
             this.KeyPreview = true;
-            this.KeyDown += Form2_KeyDown;
-            this.MouseDown += Form2_MouseDown;
+            this.KeyDown += Form5_KeyDown;
+            this.MouseDown += Form5_MouseDown;
             this.DoubleBuffered = true;
             this.SetStyle(ControlStyles.AllPaintingInWmPaint |
                   ControlStyles.UserPaint |
@@ -59,20 +59,20 @@ namespace WinFormsApp1
             Environment.Exit(0);
         }
 
-        private void Form2_Load(object sender, EventArgs e)
+        private void Form5_Load(object sender, EventArgs e)
         {
             enemySpawnTimer = new System.Windows.Forms.Timer();
-            enemySpawnTimer.Interval = 1600;
+            enemySpawnTimer.Interval = 2000;
             enemySpawnTimer.Tick += EnemySpawnTimer_Tick;
             enemySpawnTimer.Start();
 
             enemyMoveTimer = new System.Windows.Forms.Timer();
-            enemyMoveTimer.Interval = 40;
+            enemyMoveTimer.Interval = 3;
             enemyMoveTimer.Tick += EnemyMoveTimer_Tick;
             enemyMoveTimer.Start();
         }
 
-        private void Form2_Shown(object sender, EventArgs e)
+        private void Form5_Shown(object sender, EventArgs e)
         {
             int y = (ClientSize.Height - pictureBox1.Height);
             int x = (ClientSize.Width - pictureBox1.Width) / 2;
@@ -81,7 +81,7 @@ namespace WinFormsApp1
             pictureBox2.Visible = false;
         }
 
-        private void Form2_MouseDown(object sender, MouseEventArgs e)
+        private void Form5_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -187,7 +187,7 @@ namespace WinFormsApp1
             }
         }
 
-        private void Form2_KeyDown(object sender, KeyEventArgs e)
+        private void Form5_KeyDown(object sender, KeyEventArgs e)
         {
             int moveAmount = 10;
             int newX = pictureBox1.Left;
@@ -209,4 +209,6 @@ namespace WinFormsApp1
         }
     }
 }
+
+
 
