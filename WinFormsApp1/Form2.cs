@@ -55,8 +55,8 @@ namespace WinFormsApp1
                 bullet.Dispose();
             }
 
-            MessageBox.Show("Game Over!");
-            Environment.Exit(0);
+            MessageBox.Show("Game Over!", "Koniec hry", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            exit.Visible = true;
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -70,6 +70,13 @@ namespace WinFormsApp1
             enemyMoveTimer.Interval = 40;
             enemyMoveTimer.Tick += EnemyMoveTimer_Tick;
             enemyMoveTimer.Start();
+            exit.Click += exit_Click;
+        }
+        private void exit_Click(object sender, EventArgs e)
+        {
+            Form1 menu = new Form1();
+            menu.Show();
+            this.Hide();
         }
 
         private void Form2_Shown(object sender, EventArgs e)
@@ -124,8 +131,8 @@ namespace WinFormsApp1
                                 gameOver = true;
                                 enemySpawnTimer?.Stop();
                                 enemyMoveTimer?.Stop();
-                                MessageBox.Show("Win!");
-                                Environment.Exit(0);
+                                MessageBox.Show("win", "vyhral si", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                exit.Visible = true;
                             }
 
                             return;

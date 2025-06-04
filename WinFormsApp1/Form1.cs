@@ -25,6 +25,7 @@ namespace WinFormsApp1
         {
             CenterButtons(button1, button3);
             button1.Click += button1_Click;
+            button3.Click += button3_Click;
 
         }
         private void button1_Click(object sender, EventArgs e)
@@ -32,6 +33,12 @@ namespace WinFormsApp1
             Form3 hra = new Form3();
             hra.Show();  
             this.Hide();  
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Form6 hra = new Form6();
+            hra.Show();
+            this.Hide();
         }
 
 

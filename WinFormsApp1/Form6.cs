@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinFormsApp1
 {
-    public partial class Form5 : Form
+    public partial class Form6 : Form
     {
         private System.Windows.Forms.Timer enemySpawnTimer;
         private System.Windows.Forms.Timer enemyMoveTimer;
@@ -14,24 +19,7 @@ namespace WinFormsApp1
         private List<PictureBox> enemies = new List<PictureBox>();
         private Random rand = new Random();
 
-        private int enemiesspawned = 0;
-        private int enemiesdestroyed = 0;
-        private const int maxenemies = 20;
-
         private bool gameOver = false;
-
-        public Form5()
-        {
-            InitializeComponent();
-            this.KeyPreview = true;
-            this.KeyDown += Form5_KeyDown;
-            this.MouseDown += Form5_MouseDown;
-            this.DoubleBuffered = true;
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint |
-                  ControlStyles.UserPaint |
-                  ControlStyles.OptimizedDoubleBuffer, true);
-            this.UpdateStyles();
-        }
 
         private void StopGame()
         {
@@ -55,40 +43,23 @@ namespace WinFormsApp1
                 bullet.Dispose();
             }
 
-            MessageBox.Show("Game Over!", "Koniec hry", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("again", "znova", MessageBoxButtons.OK, MessageBoxIcon.Information);
             exit.Visible = true;
         }
 
-        private void Form5_Load(object sender, EventArgs e)
+        public Form6()
         {
-            enemySpawnTimer = new System.Windows.Forms.Timer();
-            enemySpawnTimer.Interval = 2000;
-            enemySpawnTimer.Tick += EnemySpawnTimer_Tick;
-            enemySpawnTimer.Start();
+            InitializeComponent();
+            this.KeyPreview = true;
+            this.KeyDown += Form6_KeyDown;
+            this.MouseDown += Form6_MouseDown;
+            this.Load += Form6_Load;
+            this.Shown += Form6_Shown;
 
-            enemyMoveTimer = new System.Windows.Forms.Timer();
-            enemyMoveTimer.Interval = 3;
-            enemyMoveTimer.Tick += EnemyMoveTimer_Tick;
-            enemyMoveTimer.Start();
-            exit.Click += exit_Click;
-        }
-        private void exit_Click(object sender, EventArgs e)
-        {
-            Form1 menu = new Form1();
-            menu.Show();
-            this.Hide();
+
         }
 
-        private void Form5_Shown(object sender, EventArgs e)
-        {
-            int y = (ClientSize.Height - pictureBox1.Height);
-            int x = (ClientSize.Width - pictureBox1.Width) / 2;
-            pictureBox1.Location = new Point(x, y);
-
-            pictureBox2.Visible = false;
-        }
-
-        private void Form5_MouseDown(object sender, MouseEventArgs e)
+        private void Form6_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -97,8 +68,8 @@ namespace WinFormsApp1
                 bullet.BackColor = bullettemp.BackColor;
 
                 bullet.Location = new Point(
-                    pictureBox1.Left + pictureBox1.Width / 2 - bullet.Width / 2,
-                    pictureBox1.Top - bullet.Height
+                pictureBox1.Left + pictureBox1.Width / 2 - bullet.Width / 2,
+                pictureBox1.Top - bullet.Height
                 );
 
                 this.Controls.Add(bullet);
@@ -124,16 +95,8 @@ namespace WinFormsApp1
 
                             bulletTimer.Stop();
 
-                            enemiesdestroyed++;
-
-                            if (enemiesdestroyed == maxenemies)
-                            {
-                                gameOver = true;
-                                enemySpawnTimer?.Stop();
-                                enemyMoveTimer?.Stop();
-                                MessageBox.Show("win", "vyhral si", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                exit.Visible = true;
-                            }
+                            MessageBox.Show("congratulations", "gatulujem", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            exit.Visible = true;
 
                             return;
                         }
@@ -150,14 +113,8 @@ namespace WinFormsApp1
             }
         }
 
-        private void EnemySpawnTimer_Tick(object sender, EventArgs e)
+        private void SpawnOneEnemy()
         {
-            if (gameOver || enemiesspawned >= maxenemies)
-            {
-                enemySpawnTimer.Stop();
-                return;
-            }
-
             PictureBox enemy = new PictureBox();
             enemy.Size = pictureBox2.Size;
             enemy.Image = pictureBox2.Image;
@@ -171,7 +128,33 @@ namespace WinFormsApp1
             enemies.Add(enemy);
             enemy.BringToFront();
 
-            enemiesspawned++;
+        }
+        private async void Form6_Load(object sender, EventArgs e)
+        {
+            label1.Text = "Hýbeš sa pomocou šípok doľava a doprava";
+            await Task.Delay(4000);
+
+            label1.Text = " ";
+            await Task.Delay(4000);
+
+            label1.Text = "Teraz ľavým tlačidlom myši traf nepriateľa";
+            await Task.Delay(4000);
+
+            label1.Visible = false;
+
+            SpawnOneEnemy();
+
+            enemyMoveTimer = new System.Windows.Forms.Timer();
+            enemyMoveTimer.Interval = 20;
+            enemyMoveTimer.Tick += EnemyMoveTimer_Tick;
+            enemyMoveTimer.Start();
+            exit.Click += exit_Click;
+        }
+        private void exit_Click(object sender, EventArgs e)
+        {
+            Form1 menu = new Form1();
+            menu.Show();
+            this.Hide();
         }
 
         private void EnemyMoveTimer_Tick(object sender, EventArgs e)
@@ -194,7 +177,16 @@ namespace WinFormsApp1
             }
         }
 
-        private void Form5_KeyDown(object sender, KeyEventArgs e)
+        private void Form6_Shown(object sender, EventArgs e)
+        {
+            int y = (ClientSize.Height - pictureBox1.Height);
+            int x = (ClientSize.Width - pictureBox1.Width) / 2;
+            pictureBox1.Location = new Point(x, y);
+
+            pictureBox2.Visible = false;
+        }
+
+        private void Form6_KeyDown(object sender, KeyEventArgs e)
         {
             int moveAmount = 10;
             int newX = pictureBox1.Left;
@@ -213,9 +205,8 @@ namespace WinFormsApp1
             }
 
             pictureBox1.Location = new Point(newX, pictureBox1.Top);
-        }
+
+        }//commit
     }
 }
-
-
 

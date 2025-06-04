@@ -31,6 +31,7 @@
             pictureBox1 = new PictureBox();
             bullettemp = new PictureBox();
             pictureBox2 = new PictureBox();
+            exit = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bullettemp).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -67,11 +68,23 @@
             pictureBox2.TabStop = false;
             pictureBox2.Visible = false;
             // 
+            // exit
+            // 
+            exit.BackColor = Color.RosyBrown;
+            exit.Location = new Point(697, 12);
+            exit.Name = "exit";
+            exit.Size = new Size(43, 29);
+            exit.TabIndex = 6;
+            exit.Text = "<--";
+            exit.UseVisualStyleBackColor = false;
+            exit.Visible = false;
+            // 
             // Form5
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(752, 803);
+            Controls.Add(exit);
             Controls.Add(pictureBox2);
             Controls.Add(bullettemp);
             Controls.Add(pictureBox1);
@@ -89,5 +102,6 @@
         private PictureBox pictureBox1;
         private PictureBox bullettemp;
         private PictureBox pictureBox2;
+        private Button exit;
     }
 }
