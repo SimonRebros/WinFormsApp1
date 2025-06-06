@@ -34,7 +34,7 @@
             // 
             // button1
             // 
-            button1.BackColor = Color.Yellow;
+            button1.BackColor = Color.FromArgb(192, 0, 192);
             button1.Font = new Font("Impact", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 238);
             button1.Location = new Point(277, 157);
             button1.Name = "button1";
@@ -45,7 +45,7 @@
             // 
             // button3
             // 
-            button3.BackColor = Color.Orange;
+            button3.BackColor = Color.Purple;
             button3.Font = new Font("Impact", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button3.Location = new Point(277, 280);
             button3.Name = "button3";
@@ -59,6 +59,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Desktop;
+            BackgroundImage = Properties.Resources.bg1;
             ClientSize = new Size(864, 593);
             Controls.Add(button3);
             Controls.Add(button1);
